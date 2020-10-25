@@ -1,0 +1,112 @@
+<div id="reclamation" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/pages/ReclamationUser'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        {{reclamation.name}}
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Reclamation
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button
+                    class="save-reclamation-button"
+                    [disabled]="reclamationForm.invalid"
+                    *ngIf="pageType ==='new'" (click)="addReclamation()"  >
+                <span>ADD</span>
+            </button>
+
+            <button mat-raised-button
+                    class="save-reclamation-button"
+                    [disabled]="reclamationForm.invalid || reclamationForm.pristine"
+                    *ngIf="pageType ==='edit'" (click)="saveReclamation()" >
+                <span>SAVE</span>
+            </button>
+
+            
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="reclamationForm" [formGroup]="reclamationForm" class="reclamation w-100-p" fxLayout="column" fxFlex>
+
+                   
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Titre</mat-label>
+                                    <input matInput placeholder="Titre"
+                                           name="titre"
+                                           formControlName="titre"
+                                           required>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Description</mat-label>
+                                    <textarea matInput placeholder="Description"
+                                              name="description"
+                                              formControlName="description"
+                                              rows="5">
+                                    </textarea>
+                                </mat-form-field>
+
+
+                                
+                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                    <mat-label>Type</mat-label>
+                                   
+
+                                    <mat-select formControlName="nm_TypeReclamation">
+                                        <mat-option *ngFor="let type of types" [value]="type">
+                                          {{type.libelle}}
+                                        </mat-option>
+                                      </mat-select>
+                                </mat-form-field>
+
+                                
+
+                            </div>
+
+                      
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

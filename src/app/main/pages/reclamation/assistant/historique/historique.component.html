@@ -1,0 +1,163 @@
+<div id="reclamations" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent"
+             fxLayout="column" fxLayoutAlign="center center"
+             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-between center">
+
+            <!-- APP TITLE -->
+            <div class="logo mb-24 mb-md-0"
+                 fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon s-32 mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    shopping_basket
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Reclamations
+                </span>
+            </div>
+            <!-- / APP TITLE -->
+
+            <!-- SEARCH -->
+            <div class="search-wrapper mx-32 mx-md-0">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input #filter placeholder="Trouver une reclamation">
+                </div>
+            </div>
+            <!-- / SEARCH -->
+
+            <!-- ADD BUTTON -->
+           
+            <!-- / ADD BUTTON -->
+
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <mat-table class="reclamations-table"
+                       #table [dataSource]="dataSource"
+                       matSort
+                       [@animateStagger]="{value:'50'}"
+                       fusePerfectScrollbar>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation">
+                        <p class="text-truncate">{{reclamation.id}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="titre">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Titre</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation">
+                        <p class="text-truncate">{{reclamation.titre}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Category Column -->
+                <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Description</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation" fxHide fxShow.gt-md>
+                        <p class="category text-truncate">
+                            {{reclamation.description}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Type</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation" fxHide fxShow.gt-md>
+                        <p class="category text-truncate">
+                            {{reclamation.nm_TypeReclamation.libelle}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="etat">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Etat</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation">
+                        <p class="text-truncate">{{reclamation.nm_Etats[0].libelle}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="phase">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Phase</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation">
+                        <p class="text-truncate">{{reclamation.nm_Phases[0].libelle}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="created_at">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date de creation</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation">
+                        <p class="text-truncate">{{reclamation.created_at}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="updated_at">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date de modification</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation">
+                        <p class="text-truncate">{{reclamation.updated_at}}</p>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="created_by">
+                    <mat-header-cell *matHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Crée par</mat-header-cell>
+                    <mat-cell *matCellDef="let reclamation" fxHide fxShow.gt-md>
+                        <p class="category text-truncate">
+                            {{reclamation.created_by}}
+                        </p>
+                    </mat-cell>
+                </ng-container>
+               
+<!-- Buttons Column -->
+<ng-container matColumnDef="buttons">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let reclamation">
+        <div fxFlex="row" fxLayoutAlign="end center">
+            
+
+           
+
+           
+        </div>
+
+    </mat-cell>
+</ng-container>
+                
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let reclamation; columns: displayedColumns;"
+                         class="reclamation"
+                         matRipple
+                         [routerLink]="'/pages/ReclamationUser/'+reclamation.id+'/'+reclamation.handle">
+                </mat-row>
+
+            </mat-table>
+
+            <mat-paginator #paginator
+                           [length]="dataSource.filteredData.length"
+                           [pageIndex]="0"
+                           [pageSize]="10"
+                           [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>
